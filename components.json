@@ -13,10 +13,10 @@
   "iconLibrary": "lucide",
   "rtl": false,
   "aliases": {
-    "components": "@/shared/ui/base",
-    "utils": "@/shared/lib/shadcn",
-    "ui": "@/shared/ui/base",
-    "lib": "@/shared/lib/shadcn"
+    "components": "@/src/shared/ui/base",
+    "utils": "@/src/shared/lib/shadcn",
+    "ui": "@/src/shared/ui/base",
+    "lib": "@/src/shared/lib/shadcn"
   },
   "menuColor": "default",
   "menuAccent": "subtle",
