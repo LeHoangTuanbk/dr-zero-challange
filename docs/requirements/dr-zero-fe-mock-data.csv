@@ -1,0 +1,88 @@
+## SHEET: anomaly_tasks
+id,type,priority,title_ja,title_en,facility_ja,facility_en,field_ja,field_en,detected_value,expected_value,anomaly_type_ja,anomaly_type_en,severity,workflow
+task-anm-001,review,high,電力消費量の外れ値確認,Review Power Consumption Outlier,名古屋工場,Nagoya Factory,電力消費量,Power consumption,"45,230 kWh","12,000-15,000 kWh",外れ値,Outlier,high,data-anomaly-review
+task-anm-002,review,high,燃料消費の外れ値確認,Review Fuel Consumption Outlier,福岡倉庫,Fukuoka Warehouse,燃料消費,Fuel consumption,"8,500 L","2,000-3,000 L",外れ値,Outlier,high,data-anomaly-review
+task-anm-003,review,medium,ガス使用量の欠損値確認,Review Missing Gas Usage,大阪支社,Osaka Branch,ガス使用量,Gas usage,(missing),Required field,欠損値,Missing value,medium,data-anomaly-review
+task-anm-004,review,low,水道料金の重複確認,Review Duplicate Water Bill,本社ビル,Headquarters,水道料金,Water bill,¥125,000,No duplicates,重複,Duplicate,low,data-anomaly-review
+task-anm-005,review,low,契約番号の形式エラー確認,Review Contract Number Format,札幌支社,Sapporo Branch,契約番号,Contract number,ABC-123,XXX-XXXX format,形式エラー,Format error,low,data-anomaly-review
+
+## SHEET: anomaly_chart
+facility_ja,facility_en,anomaly_count
+名古屋工場,Nagoya Factory,3
+福岡倉庫,Fukuoka Warehouse,2
+大阪支社,Osaka Branch,1
+本社ビル,Headquarters,1
+札幌支社,Sapporo Branch,1
+
+## SHEET: anomaly_chart_insights
+insight_ja,insight_en
+名古屋工場で最も多くの異常が検出されています,Most anomalies detected at Nagoya Factory
+外れ値タイプの異常が全体の40%を占めています,Outliers account for 40% of all anomalies
+高優先度の異常が2件、対応が必要です,2 high-priority anomalies require action
+
+## SHEET: anomaly_review_fields
+field_ja,field_en,value,confidence_pct,editable
+施設,Facility,名古屋工場,100,no
+項目,Field,電力消費量,100,no
+元の値,Original value,"125,847 kWh",100,no
+検出値,Detected value,"553,726 kWh",45,yes
+AI推奨値,AI suggested value,"128,432 kWh",92,yes
+異常理由,Anomaly reason,入力桁ミス（10倍）の可能性,88,no
+
+## SHEET: extraction_task
+id,type,priority,title_ja,title_en,facility_ja,facility_en,data_type,period,workflow
+task-inp-001,file_upload,medium,Scope 2 電力データ入力,Input Scope 2 Electricity Data,本社ビル,Headquarters,Scope 2,2024年10月,electricity-intake
+
+## SHEET: extraction_result
+field_key,field_ja,field_en,value,confidence_pct,editable
+period,対象期間,Billing period,2024年9月1日〜9月30日,98,no
+customer,契約名義,Contract holder,株式会社サンプル製造,95,yes
+supply_point,供給地点特定番号,Supply point ID,0000-0000-0000-0000-0001,72,yes
+usage,使用量,Usage,"125,847 kWh",99,yes
+amount,請求金額,Amount,"¥3,456,789",97,no
+power_company,電力会社,Power company,東京電力エナジーパートナー,99,no
+contract_type,契約種別,Contract type,高圧電力B,94,yes
+
+## SHEET: vendor_task
+id,type,priority,title_ja,title_en,campaign,total_vendors,responded,pending,overdue,deadline_days_from_now,workflow
+task-vnd-001,engagement,medium,サプライヤー回答状況確認,Check Vendor Feedback Status,Scope 3 Q4 データ収集,25,18,7,2,14,vendor-engagement-followup
+
+## SHEET: vendor_list
+id,name,status,last_reminder
+V001,株式会社山田製作所,pending,2024-11-01
+V002,ABCロジスティクス,pending,2024-11-05
+V003,鈴木化学工業,overdue,2024-10-25
+V004,グローバル包装,pending,
+V005,東海運輸,overdue,2024-10-20
+V006,ニッポン部品,pending,2024-11-08
+V007,関西エネルギー,pending,
+
+## SHEET: vendor_chart
+status_ja,status_en,count,color
+回答済み,Responded,18,green
+未回答,Pending,5,yellow
+期限超過,Overdue,2,red
+
+## SHEET: vendor_chart_insights
+insight_ja,insight_en
+回答率72%（目標90%）,Response rate 72% (target 90%)
+2社が期限を超過しています,2 vendors are past deadline
+残り14日で7社からの回答が必要,7 vendor responses needed in 14 days
+
+## SHEET: email_template
+field,value
+subject,【リマインド】Scope 3データ提出のお願い
+body,"お取引先各位
+
+いつもお世話になっております。
+環境マネジメント部の佐藤です。
+
+先日ご依頼いたしましたScope 3排出量算定用データのご提出について、
+期限が近づいておりますのでリマインドをお送りしております。
+
+【提出期限】2024年11月30日
+【提出方法】添付のExcelテンプレートにご記入の上、本メールへ返信
+
+ご不明な点がございましたら、お気軽にお問い合わせください。
+
+何卒よろしくお願いいたします。"
