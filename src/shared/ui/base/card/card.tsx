@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/src/shared/lib/shadcn";
+import { cn } from "@/shared/lib/shadcn";
 
 function Card({
   className,
