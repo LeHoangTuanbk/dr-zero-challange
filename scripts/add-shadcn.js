@@ -14,7 +14,7 @@ if (components.length === 0) {
 try {
   // Add shadcn components
   console.log(`Adding components: ${components.join(', ')}...`);
-  execSync(`npx shadcn@latest add ${components.join(' ')} --overwrite=false`, {
+  execSync(`npx shadcn@latest add ${components.join(' ')}`, {
     stdio: 'inherit',
     cwd: process.cwd(),
   });

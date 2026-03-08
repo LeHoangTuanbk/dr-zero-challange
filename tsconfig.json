@@ -19,7 +19,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@app/*": ["./src/app/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@features/*": ["./src/features/*"],
+      "@tests/*": ["./tests/*"]
     }
   },
   "include": [

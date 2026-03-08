@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "shadcn:add": "node scripts/add-shadcn.js",
+    "ts:check": "tsc -b ./tsconfig.json"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
