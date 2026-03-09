@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/v1.0.0/2026-03-909",
+  "$comment": "Configuration-Driven UI registry. Adding a mini-app = one entry here. Feature chunk loaders in registry.ts are the only other change needed.",
+
+  "AnomalyChart": {
+    "feature": "anomaly",
+    "export": "AnomalyChartApp",
+    "title": "Anomaly Chart",
+    "pattern": "A"
+  },
+  "AnomalyReview": {
+    "feature": "anomaly",
+    "export": "AnomalyReviewApp",
+    "title": "Anomaly Review",
+    "pattern": "A"
+  },
+  "AnomalyApprove": {
+    "feature": "anomaly",
+    "export": "AnomalyApproveApp",
+    "title": "Anomaly Approve",
+    "pattern": "A"
+  },
+
+  "ExtractionUpload": {
+    "feature": "extraction",
+    "export": "ExtractionUploadApp",
+    "title": "File Upload",
+    "pattern": "B"
+  },
+  "ExtractionReview": {
+    "feature": "extraction",
+    "export": "ExtractionReviewApp",
+    "title": "Extraction Review",
+    "pattern": "B"
+  },
+
+  "SupplierStatus": {
+    "feature": "supplier",
+    "export": "SupplierStatusApp",
+    "title": "Supplier Status",
+    "pattern": "C"
+  },
+  "SupplierCompose": {
+    "feature": "supplier",
+    "export": "SupplierComposeApp",
+    "title": "Email Compose",
+    "pattern": "C"
+  },
+  "SupplierConfirm": {
+    "feature": "supplier",
+    "export": "SupplierConfirmApp",
+    "title": "Send Confirmation",
+    "pattern": "C"
+  }
+}
