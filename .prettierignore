@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+dist
+build
+.cache
+
+# Generated files
+**/generated/**
+.storybook
+
+# Config files
+*.json
+*.graphql
+steiger.config.ts
+vite.config.ts
+vitest.config.ts
+apollo-codegen-config.ts
+pnpm-lock.yaml
+
+# IDE and system
+.vscode
+.idea
+.DS_Store
