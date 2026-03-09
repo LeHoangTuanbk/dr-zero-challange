@@ -11,6 +11,7 @@ const notoSansJP = localFont({
 export const metadata: Metadata = {
   title: 'Dr.Zero — AI Decarbonization Platform',
   description: 'AI-powered emission data management and anomaly resolution',
+  icons: { icon: '/favicon.svg' },
 };
 
 export default function RootLayout({

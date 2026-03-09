@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useWorkflowStore } from "@shared/store/workflow-store";
-import { getWorkflowConfig } from "@shared/lib/workflow/configs";
+import { useWorkflowStore } from '@shared/store/workflow-store';
+import { getWorkflowConfig } from '@shared/lib/workflow/configs';
 import {
   getActiveSteps,
   getActiveStepIndex,
-} from "@shared/lib/workflow/engine";
-import { anomalyTasks } from "@shared/data/mock/anomaly";
-import { extractionTask } from "@shared/data/mock/extraction";
-import { supplierTask } from "@shared/data/mock/supplier";
-import { TaskCard } from "./task-card";
+} from '@shared/lib/workflow/engine';
+import { anomalyTasks } from '@shared/data/mock/anomaly';
+import { extractionTask } from '@shared/data/mock/extraction';
+import { supplierTask } from '@shared/data/mock/supplier';
+import { TaskCard } from './task-card';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function resolveRawTask(taskId: string): any {
@@ -28,9 +28,8 @@ export function TaskList() {
     <aside className="flex flex-col h-full bg-card border-r border-border">
       <div className="px-5 pt-5 pb-4 border-b border-border">
         <div className="flex items-center gap-2 mb-1">
-          <div className="size-2 rounded-full bg-primary" />
-          <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
-            Dr.Zero
+          <span className="text-base font-bold text-foreground tracking-tight">
+            Dr.<span className="text-primary">Zero</span>
           </span>
         </div>
         <p className="text-[11px] text-muted-foreground">
@@ -44,7 +43,7 @@ export function TaskList() {
           const isActive = task.id === activeTaskId;
 
           let stepProgress: { current: number; total: number } | undefined;
-          if (state?.status === "active") {
+          if (state?.status === 'active') {
             try {
               const config = getWorkflowConfig(task.workflow);
               const rawTask = resolveRawTask(task.id);
@@ -71,7 +70,7 @@ export function TaskList() {
               task={task}
               isActive={isActive}
               stepProgress={stepProgress}
-              workflowStatus={state?.status ?? "idle"}
+              workflowStatus={state?.status ?? 'idle'}
               onClick={() => selectTask(task.id)}
             />
           );
