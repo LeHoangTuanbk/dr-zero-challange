@@ -1,6 +1,6 @@
 'use client';
 
-import { createElement } from 'react';
+import { createElement, Suspense } from 'react';
 import { useWorkflowStore } from '@shared/store/workflow-store';
 import { getWorkflowConfig } from '@shared/lib/workflow/configs';
 import {
@@ -43,7 +43,11 @@ function MiniAppHost({ miniAppKey, ...props }: MiniAppHostProps) {
       </div>
     );
   }
-  return createElement(App, props);
+  return (
+    <Suspense fallback={<MiniAppSkeleton />}>
+      {createElement(App, props)}
+    </Suspense>
+  );
 }
 
 export function Canvas() {

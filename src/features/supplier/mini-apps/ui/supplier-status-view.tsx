@@ -79,7 +79,7 @@ export const SupplierStatusView = ({
               </Pie>
               <Tooltip
                 contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 12 }}
-                formatter={(val) => [`${val} 社`, '']}
+                formatter={(val) => `${val} 社`}
               />
             </PieChart>
           </ResponsiveContainer>
