@@ -13,6 +13,11 @@ export type StepConfig = {
   skip?: (ctx: WorkflowContext) => boolean;
 };
 
+export type RawStepConfig = Omit<StepConfig, 'skip'> & { skip?: string };
+export type RawWorkflowConfig = Omit<WorkflowConfig, 'steps'> & {
+  steps: RawStepConfig[];
+};
+
 export type WorkflowTask = { workflow: string };
 
 export interface WorkflowContext {

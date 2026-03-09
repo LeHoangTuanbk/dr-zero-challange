@@ -1,20 +1,27 @@
-import type { WorkflowConfig } from '../types'
-import { dataAnomalyReviewConfig } from './data-anomaly-review'
-import { supplierEngagementFollowupConfig } from './supplier-engagement-followup'
-import { electricityIntakeConfig } from './electricity-intake'
+import type { WorkflowConfig, RawWorkflowConfig } from '../types';
+import { PREDICATES } from './predicates';
+import dataAnomalyReview from './data-anomaly-review.json';
+import supplierEngagementFollowup from './supplier-engagement-followup.json';
+import electricityIntake from './electricity-intake.json';
 
-/**
- * Global workflow registry.
- * Adding a new workflow = import config + add one entry here.
- */
+function hydrate(raw: RawWorkflowConfig): WorkflowConfig {
+  return {
+    ...raw,
+    steps: raw.steps.map((step) => ({
+      ...step,
+      skip: step.skip ? PREDICATES[step.skip] : undefined,
+    })),
+  };
+}
+
 export const WORKFLOW_CONFIGS: Record<string, WorkflowConfig> = {
-  'data-anomaly-review': dataAnomalyReviewConfig,
-  'supplier-engagement-followup': supplierEngagementFollowupConfig,
-  'electricity-intake': electricityIntakeConfig,
-}
+  'data-anomaly-review': hydrate(dataAnomalyReview),
+  'supplier-engagement-followup': hydrate(supplierEngagementFollowup),
+  'electricity-intake': hydrate(electricityIntake),
+};
 
-export function getWorkflowConfig(id: string): WorkflowConfig {
-  const config = WORKFLOW_CONFIGS[id]
-  if (!config) throw new Error(`Unknown workflow: "${id}"`)
-  return config
-}
+export const getWorkflowConfig = (id: string): WorkflowConfig => {
+  const config = WORKFLOW_CONFIGS[id];
+  if (!config) throw new Error(`Unknown workflow: "${id}"`);
+  return config;
+};
