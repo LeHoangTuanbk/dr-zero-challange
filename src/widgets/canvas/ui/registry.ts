@@ -1,10 +1,10 @@
 import type { MiniAppComponent } from '@shared/lib/workflow/types';
-import { AnomalyChartApp } from '@features/anomaly/mini-apps/anomaly-chart-app';
-import { AnomalyReviewApp } from '@features/anomaly/mini-apps/anomaly-review-app';
-import { AnomalyApproveApp } from '@features/anomaly/mini-apps/anomaly-approve-app';
-import { SupplierStatusApp } from '@/features/supplier/mini-apps/ui/supplier-status-container';
-import { SupplierComposeApp } from '@/features/supplier/mini-apps/ui/supplier-compose-container';
-import { SupplierConfirmApp } from '@/features/supplier/mini-apps/ui/supplier-confirm-container';
+import { AnomalyChartApp } from '@features/anomaly/mini-apps/';
+import { AnomalyReviewApp } from '@features/anomaly/mini-apps';
+import { AnomalyApproveApp } from '@features/anomaly/mini-apps';
+import { SupplierStatusApp } from '@features/supplier/mini-apps';
+import { SupplierComposeApp } from '@features/supplier/mini-apps';
+import { SupplierConfirmApp } from '@features/supplier/mini-apps';
 
 export const MINI_APP_REGISTRY: Record<string, MiniAppComponent> = {
   // Pattern A — Anomaly Detection
