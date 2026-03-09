@@ -25,12 +25,8 @@ export type AnomalyChartViewProps = {
   isReadOnly: boolean;
 };
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
 const BAR_COLOR_ACTIVE = '#5a864d';
 const BAR_COLOR_DEFAULT = '#dde6d8';
-
-// ─── View ─────────────────────────────────────────────────────────────────────
 
 export const AnomalyChartView = ({
   task,

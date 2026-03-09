@@ -13,7 +13,7 @@ export const MINI_APP_REGISTRY: Record<string, MiniAppComponent> = {
   AnomalyChart: AnomalyChartApp,
   AnomalyReview: AnomalyReviewApp,
   AnomalyApprove: AnomalyApproveApp,
-  // Pattern B — Data Input
+  // Pattern B — Data Input Extraction
   ExtractionUpload: ExtractionUploadApp,
   ExtractionReview: ExtractionReviewApp,
   // Pattern C — Supplier Engagement
