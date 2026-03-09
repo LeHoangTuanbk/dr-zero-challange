@@ -74,8 +74,10 @@ export function Canvas() {
     resolvedCtx,
     state.currentStepId,
   );
-  const completedStepIds = activeSteps.slice(0, currentIndex).map((s) => s.id);
   const isCompleted = state.status === 'completed';
+  const completedStepIds = isCompleted
+    ? activeSteps.map((s) => s.id)
+    : activeSteps.slice(0, currentIndex).map((s) => s.id);
 
   return (
     <div className="flex flex-col h-full">

@@ -10,6 +10,7 @@ import {
 import type { QueueTask } from '@shared/data/mock';
 import { anomalyNarratives } from '@shared/data/mock/anomaly-narratives';
 import { supplierNarratives } from '@shared/data/mock/supplier-narratives';
+import { extractionNarratives } from '@shared/data/mock/extraction-narratives';
 import type {
   TaskWorkflowState,
   NarrativeMessage,
@@ -44,6 +45,7 @@ function buildContext(
 const NARRATIVES: Record<string, string> = {
   ...anomalyNarratives,
   ...supplierNarratives,
+  ...extractionNarratives,
 };
 
 function pickNarrative(taskId: string, stepId: string): string | null {
