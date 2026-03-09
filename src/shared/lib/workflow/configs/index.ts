@@ -4,10 +4,6 @@ import dataAnomalyReview from './data-anomaly-review.json';
 import supplierEngagementFollowup from './supplier-engagement-followup.json';
 import electricityIntake from './electricity-intake.json';
 
-/**
- * Hydrate a raw JSON workflow config into a runtime WorkflowConfig.
- * Resolves skip predicate keys → functions from PREDICATES registry.
- */
 function hydrate(raw: RawWorkflowConfig): WorkflowConfig {
   return {
     ...raw,
@@ -18,14 +14,10 @@ function hydrate(raw: RawWorkflowConfig): WorkflowConfig {
   };
 }
 
-/**
- * Global workflow registry.
- * Adding a new workflow = add JSON file + one import + one entry here.
- */
 export const WORKFLOW_CONFIGS: Record<string, WorkflowConfig> = {
-  'data-anomaly-review':          hydrate(dataAnomalyReview),
+  'data-anomaly-review': hydrate(dataAnomalyReview),
   'supplier-engagement-followup': hydrate(supplierEngagementFollowup),
-  'electricity-intake':           hydrate(electricityIntake),
+  'electricity-intake': hydrate(electricityIntake),
 };
 
 export const getWorkflowConfig = (id: string): WorkflowConfig => {

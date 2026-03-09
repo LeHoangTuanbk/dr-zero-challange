@@ -13,9 +13,10 @@ export type StepConfig = {
   skip?: (ctx: WorkflowContext) => boolean;
 };
 
-// Raw JSON shape — skip is a predicate key string, resolved at load time
 export type RawStepConfig = Omit<StepConfig, 'skip'> & { skip?: string };
-export type RawWorkflowConfig = Omit<WorkflowConfig, 'steps'> & { steps: RawStepConfig[] };
+export type RawWorkflowConfig = Omit<WorkflowConfig, 'steps'> & {
+  steps: RawStepConfig[];
+};
 
 export type WorkflowTask = { workflow: string };
 
