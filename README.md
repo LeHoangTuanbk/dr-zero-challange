@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dr.Zero — AI-Powered Decarbonization Platform
 
-## Getting Started
+**Live demo:** [VERCEL_URL]
 
-First, run the development server:
+---
+
+## Overview
+
+A working prototype of Dr.Zero's agentic UI — a task-driven interface where AI orchestrates workflows for corporate decarbonization data management. Three workflow patterns are implemented across 8 mini-apps.
+
+---
+
+## Run Locally
+
+**Prerequisites:** Node.js 18+, pnpm
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+No environment variables required — all data is mocked.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+| Concern      | Choice                      | Why                                              |
+| ------------ | --------------------------- | ------------------------------------------------ |
+| Framework    | Next.js 15 (App Router)     | SSR + client components, ideal for Vercel deploy |
+| Language     | TypeScript                  | Required for typed mini-app contracts            |
+| Styling      | Tailwind CSS                | Utility-first, consistent design tokens          |
+| State        | Zustand                     | Minimal boilerplate for FSM workflow state       |
+| Charts       | Recharts (via shadcn/ui)    | Composable, works with Tailwind tokens           |
+| File upload  | react-dropzone              | Headless, accessible drag-and-drop               |
+| Architecture | FSD (Feature-Sliced Design) | Clear ownership boundaries per feature           |
+| Pattern      | Configuration-Driven UI     | Workflows and mini-apps defined in JSON — new workflow = one config file, zero component changes |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture Highlights
 
-## Deploy on Vercel
+**Configuration-Driven UI (CDUI):** workflows and mini-apps are defined in JSON. Adding a new workflow = one JSON file. Adding a mini-app = one entry in `shared/config/mini-app-registry.json`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**FSM Workflow Engine:** each task runs as a finite state machine (`idle → active → completed → dismissed`). Steps are resolved dynamically — skip predicates in the config enable branching without touching components.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Lazy-Loaded Mini-App Registry:** `mini-app-registry.json` maps string keys to feature chunks. The canvas resolves components via `React.lazy` at runtime — it has zero static knowledge of which component it will render.
+
+**Container / Presentational split:** every mini-app is two files — `*-container.tsx` owns state and logic, `*-view.tsx` is a pure render function.
+
+---
+
+## Assumptions & Deviations
+
+- **No real backend.** AI extraction, anomaly detection, and email sending are all simulated with realistic delays and partial-failure states.
+- **Pattern B approval step omitted.** The assignment suggests `upload → extract → review → approve → save`. The review step itself acts as the approval — saving is the final commit action. A separate approve mini-app would add no UX value in this prototype.
+- **Supplier terminology.** The mock data uses "vendor" but "supplier" is the correct Scope 3 domain term. All code uses `supplier`.
+- **Japanese UI labels.** All primary labels are in Japanese per spec. English subtitles are included for secondary fields.
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/                               # Next.js App Router
+├── features/
+│   ├── anomaly/mini-apps/             # Pattern A — 3 mini-apps
+│   ├── extraction/mini-apps/          # Pattern B — 2 mini-apps
+│   └── supplier/mini-apps/            # Pattern C — 3 mini-apps
+├── shared/
+│   ├── config/mini-app-registry.json  # CDUI registry (source of truth)
+│   ├── data/mock/                     # Typed mock data (all 8 sheets)
+│   ├── lib/workflow/                  # FSM engine + workflow configs
+│   └── store/workflow-store.ts        # Zustand global state
+└── widgets/
+    ├── canvas/                        # Mini-app renderer
+    ├── task-list/                     # Sidebar task queue
+    └── chat-panel/                    # AI narrative panel
+```
+
+See [DESIGN.md](./DESIGN.md) for architecture decisions and agent integration proposal.
