@@ -35,14 +35,16 @@ const ExtractionUploadContainer = ({
         setProgress(Math.min(p, 100));
         if (p >= 100) {
           clearInterval(interval);
-          timerRef.current = setTimeout(() => setPhase('extracting'), 200);
+          timerRef.current = setTimeout(() => {
+            setProgress(0);
+            setPhase('extracting');
+          }, 200);
         }
       }, UPLOAD_DURATION / 10);
       return () => clearInterval(interval);
     }
 
     if (phase === 'extracting') {
-      setProgress(0);
       let p = 0;
       const interval = setInterval(() => {
         p += 8;
