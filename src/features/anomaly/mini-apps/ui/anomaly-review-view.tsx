@@ -157,7 +157,7 @@ export const AnomalyReviewView = ({
   isReadOnly,
 }: AnomalyReviewViewProps) => {
   return (
-    <div className="flex flex-col gap-4 p-6 h-full">
+    <div className="flex flex-col gap-4 p-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
           <span
@@ -186,7 +186,7 @@ export const AnomalyReviewView = ({
         </div>
       )}
 
-      <div className="flex-1 rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
         <table className="w-full">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50">
@@ -219,7 +219,7 @@ export const AnomalyReviewView = ({
       <p className="text-xs text-slate-400 italic">{modeHint}</p>
 
       {!isReadOnly && (
-        <div className="flex items-center justify-between gap-3">
+        <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
           <button
             onClick={onBack}
             className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
