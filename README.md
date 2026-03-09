@@ -1,6 +1,6 @@
 # Dr.Zero — AI-Powered Decarbonization Platform
 
-**Live demo:** [VERCEL_URL]
+**Live demo:** [VERCEL_URL](https://dr-zero-challange.vercel.app/)
 
 ---
 
@@ -27,15 +27,15 @@ No environment variables required — all data is mocked.
 
 ## Tech Stack
 
-| Concern      | Choice                      | Why                                              |
-| ------------ | --------------------------- | ------------------------------------------------ |
-| Framework    | Next.js 15 (App Router)     | SSR + client components, ideal for Vercel deploy |
-| Language     | TypeScript                  | Required for typed mini-app contracts            |
-| Styling      | Tailwind CSS                | Utility-first, consistent design tokens          |
-| State        | Zustand                     | Minimal boilerplate for FSM workflow state       |
-| Charts       | Recharts (via shadcn/ui)    | Composable, works with Tailwind tokens           |
-| File upload  | react-dropzone              | Headless, accessible drag-and-drop               |
-| Architecture | FSD (Feature-Sliced Design) | Clear ownership boundaries per feature           |
+| Concern      | Choice                      | Why                                                                                              |
+| ------------ | --------------------------- | ------------------------------------------------------------------------------------------------ |
+| Framework    | Next.js 15 (App Router)     | SSR + client components, ideal for Vercel deploy                                                 |
+| Language     | TypeScript                  | Required for typed mini-app contracts                                                            |
+| Styling      | Tailwind CSS                | Utility-first, consistent design tokens                                                          |
+| State        | Zustand                     | Minimal boilerplate for FSM workflow state                                                       |
+| Charts       | Recharts (via shadcn/ui)    | Composable, works with Tailwind tokens                                                           |
+| File upload  | react-dropzone              | Headless, accessible drag-and-drop                                                               |
+| Architecture | FSD (Feature-Sliced Design) | Clear ownership boundaries per feature                                                           |
 | Pattern      | Configuration-Driven UI     | Workflows and mini-apps defined in JSON — new workflow = one config file, zero component changes |
 
 ---
