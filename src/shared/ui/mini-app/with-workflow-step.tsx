@@ -1,29 +1,35 @@
-'use client'
+'use client';
 
-import { Component, type ComponentType, type ReactNode, type ErrorInfo } from 'react'
-import { AlertCircle } from 'lucide-react'
-import type { MiniAppProps } from '@shared/lib/workflow/types'
-import { MiniAppSkeleton, type MiniAppSkeletonVariant } from './mini-app-skeleton'
+import {
+  Component,
+  type ComponentType,
+  type ReactNode,
+  type ErrorInfo,
+} from 'react';
+import { AlertCircle } from 'lucide-react';
+import type { MiniAppProps } from '@shared/lib/workflow/types';
+import {
+  MiniAppSkeleton,
+  type MiniAppSkeletonVariant,
+} from './mini-app-skeleton';
 
-// ─── Error Boundary ───────────────────────────────────────────────────────────
-
-interface ErrorBoundaryState {
-  hasError: boolean
-  message: string
-}
+type ErrorBoundaryState = {
+  hasError: boolean;
+  message: string;
+};
 
 class MiniAppErrorBoundary extends Component<
   { children: ReactNode },
   ErrorBoundaryState
 > {
-  state: ErrorBoundaryState = { hasError: false, message: '' }
+  state: ErrorBoundaryState = { hasError: false, message: '' };
 
   static getDerivedStateFromError(err: Error): ErrorBoundaryState {
-    return { hasError: true, message: err.message }
+    return { hasError: true, message: err.message };
   }
 
   override componentDidCatch(err: Error, info: ErrorInfo) {
-    console.error('[MiniApp Error]', err, info)
+    console.error('[MiniApp Error]', err, info);
   }
 
   override render() {
@@ -31,7 +37,9 @@ class MiniAppErrorBoundary extends Component<
       return (
         <div className="flex flex-col items-center justify-center h-full gap-3 p-6 text-center">
           <AlertCircle className="size-8 text-red-400" />
-          <p className="text-sm font-medium text-slate-700">表示エラーが発生しました</p>
+          <p className="text-sm font-medium text-slate-700">
+            表示エラーが発生しました
+          </p>
           <p className="text-xs text-slate-400">{this.state.message}</p>
           <button
             onClick={() => this.setState({ hasError: false, message: '' })}
@@ -40,17 +48,15 @@ class MiniAppErrorBoundary extends Component<
             再試行
           </button>
         </div>
-      )
+      );
     }
-    return this.props.children
+    return this.props.children;
   }
 }
 
-// ─── HOC ─────────────────────────────────────────────────────────────────────
-
-interface WithWorkflowStepOptions {
-  skeleton?: MiniAppSkeletonVariant
-}
+type WithWorkflowStepOptions = {
+  skeleton?: MiniAppSkeletonVariant;
+};
 
 /**
  * HOC that wraps any mini-app with:
@@ -66,19 +72,19 @@ export function withWorkflowStep<P extends MiniAppProps>(
 ) {
   function WorkflowStepWrapper(props: P) {
     if (!props.context?.taskId) {
-      return <MiniAppSkeleton variant={options.skeleton} />
+      return <MiniAppSkeleton variant={options.skeleton} />;
     }
 
     return (
       <MiniAppErrorBoundary>
         <Component {...props} />
       </MiniAppErrorBoundary>
-    )
+    );
   }
 
   WorkflowStepWrapper.displayName = `WithWorkflowStep(${
     Component.displayName ?? Component.name ?? 'Component'
-  })`
+  })`;
 
-  return WorkflowStepWrapper
+  return WorkflowStepWrapper;
 }

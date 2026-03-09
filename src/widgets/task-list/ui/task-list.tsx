@@ -8,7 +8,7 @@ import {
 } from "@shared/lib/workflow/engine";
 import { anomalyTasks } from "@shared/data/mock/anomaly";
 import { extractionTask } from "@shared/data/mock/extraction";
-import { vendorTask } from "@shared/data/mock/vendor";
+import { supplierTask } from "@shared/data/mock/supplier";
 import { TaskCard } from "./task-card";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,7 +16,7 @@ function resolveRawTask(taskId: string): any {
   return (
     anomalyTasks.find((t) => t.id === taskId) ??
     (extractionTask.id === taskId ? extractionTask : null) ??
-    (vendorTask.id === taskId ? vendorTask : null)
+    (supplierTask.id === taskId ? supplierTask : null)
   );
 }
 

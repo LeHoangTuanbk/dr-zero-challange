@@ -29,7 +29,7 @@ const SEVERITY_CONFIG = {
 const CATEGORY_ICON: Record<TaskCategory, React.ElementType> = {
   anomaly:    AlertTriangle,
   extraction: FileInput,
-  vendor:     Mail,
+  supplier:   Mail,
 }
 
 function StepDots({ total, current }: { total: number; current: number }) {
