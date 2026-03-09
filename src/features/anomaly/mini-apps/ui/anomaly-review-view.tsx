@@ -122,7 +122,13 @@ const FieldRow = ({
         )}
       </td>
       <td className="py-3 px-3 whitespace-nowrap">
-        <ConfidenceBadge pct={field.confidence_pct} />
+        {isModified ? (
+          <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold bg-blue-50 text-blue-700 ring-1 ring-blue-200">
+            手動
+          </span>
+        ) : (
+          <ConfidenceBadge pct={field.confidence_pct} />
+        )}
       </td>
       <td className="py-3 pr-4 w-8">
         {field.editable && !isReadOnly && !editing && (
