@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { Sparkles } from "lucide-react";
-import { useWorkflowStore } from "@shared/store/workflow-store";
-import type { NarrativeMessage } from "@shared/lib/workflow/types";
-import { useTypewriter } from "../hook/use-typewriter";
+import { useEffect, useRef } from 'react';
+import { Sparkles } from 'lucide-react';
+import { useWorkflowStore } from '@shared/store/workflow-store';
+import type { NarrativeMessage } from '@shared/lib/workflow/types';
+import { useTypewriter } from '../hook/use-typewriter';
 
 type NarrativeBubbleProps = {
   message: NarrativeMessage;
   isLatest: boolean;
 };
 
-function NarrativeBubble({ message, isLatest }: NarrativeBubbleProps) {
+const NarrativeBubble = ({ message, isLatest }: NarrativeBubbleProps) => {
   const { displayed, done } = useTypewriter(message.text, isLatest ? 18 : 0);
   const text = isLatest ? displayed : message.text;
 
@@ -28,9 +28,9 @@ function NarrativeBubble({ message, isLatest }: NarrativeBubbleProps) {
       </p>
     </div>
   );
-}
+};
 
-export function ChatPanel() {
+export const ChatPanel = () => {
   const { narrativeMessages, activeTaskId } = useWorkflowStore();
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +39,7 @@ export function ChatPanel() {
     : [];
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [filtered.length]);
 
   return (
@@ -68,4 +68,4 @@ export function ChatPanel() {
       </div>
     </div>
   );
-}
+};

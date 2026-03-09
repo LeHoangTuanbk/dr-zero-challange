@@ -30,11 +30,11 @@ const EmptyState = () => {
   );
 };
 
-interface MiniAppHostProps extends MiniAppProps {
+type MiniAppHostProps = MiniAppProps & {
   miniAppKey: string;
-}
+};
 
-function MiniAppHost({ miniAppKey, ...props }: MiniAppHostProps) {
+const MiniAppHost = ({ miniAppKey, ...props }: MiniAppHostProps) => {
   const App = getMiniApp(miniAppKey);
   if (!App) {
     return (
@@ -48,7 +48,7 @@ function MiniAppHost({ miniAppKey, ...props }: MiniAppHostProps) {
       {createElement(App, props)}
     </Suspense>
   );
-}
+};
 
 export function Canvas() {
   const {

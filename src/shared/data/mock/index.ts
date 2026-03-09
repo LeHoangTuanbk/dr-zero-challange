@@ -1,23 +1,22 @@
-export * from './anomaly'
-export * from './extraction'
-export * from './supplier'
+export * from './anomaly';
+export * from './extraction';
+export * from './supplier';
 
-// Unified task queue — all 7 tasks in priority order
-import { anomalyTasks } from './anomaly'
-import { extractionTask } from './extraction'
-import { supplierTask } from './supplier'
+import { anomalyTasks } from './anomaly';
+import { extractionTask } from './extraction';
+import { supplierTask } from './supplier';
 
-export type TaskCategory = 'anomaly' | 'extraction' | 'supplier'
+export type TaskCategory = 'anomaly' | 'extraction' | 'supplier';
 
-export interface QueueTask {
-  id: string
-  category: TaskCategory
-  priority: 'high' | 'medium' | 'low'
-  title_ja: string
-  facility_ja: string
-  workflow: string
-  severity?: 'high' | 'medium' | 'low'
-}
+export type QueueTask = {
+  id: string;
+  category: TaskCategory;
+  priority: 'high' | 'medium' | 'low';
+  title_ja: string;
+  facility_ja: string;
+  workflow: string;
+  severity?: 'high' | 'medium' | 'low';
+};
 
 export const taskQueue: QueueTask[] = [
   ...anomalyTasks.map((t) => ({
@@ -45,4 +44,4 @@ export const taskQueue: QueueTask[] = [
     facility_ja: supplierTask.campaign,
     workflow: supplierTask.workflow,
   },
-]
+];

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { TaskList } from "@/widgets/task-list";
-import { Canvas } from "@/widgets/canvas/";
-import { ChatPanel } from "@widgets/chat-panel";
+import { TaskList } from '@/widgets/task-list';
+import { Canvas } from '@/widgets/canvas/';
+import { ChatPanel } from '@widgets/chat-panel';
 
-export function AgenticLayout() {
+export const AgenticLayout = () => {
   return (
     <div className="flex h-screen bg-background p-3 gap-3 overflow-hidden">
       <div className="w-60 shrink-0 rounded-2xl overflow-hidden border border-border shadow-sm">
@@ -21,4 +21,4 @@ export function AgenticLayout() {
       </div>
     </div>
   );
-}
+};
