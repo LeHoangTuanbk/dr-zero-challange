@@ -1,0 +1,9 @@
+{
+  "id": "data-anomaly-review",
+  "title_ja": "異常データレビュー",
+  "steps": [
+    { "id": "chart",   "miniApp": "AnomalyChart",   "title_ja": "異常分析",   "skip": "skip_if_not_outlier" },
+    { "id": "review",  "miniApp": "AnomalyReview",  "title_ja": "データ確認" },
+    { "id": "approve", "miniApp": "AnomalyApprove", "title_ja": "承認" }
+  ]
+}
