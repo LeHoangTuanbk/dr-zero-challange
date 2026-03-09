@@ -29,7 +29,7 @@ No environment variables required — all data is mocked.
 
 | Concern      | Choice                      | Why                                                                                              |
 | ------------ | --------------------------- | ------------------------------------------------------------------------------------------------ |
-| Framework    | Next.js 15 (App Router)     | SSR + client components, ideal for Vercel deploy                                                 |
+| Framework    | Next.js 16 (App Router)     | SSR + client components, ideal for Vercel deploy                                                 |
 | Language     | TypeScript                  | Required for typed mini-app contracts                                                            |
 | Styling      | Tailwind CSS                | Utility-first, consistent design tokens                                                          |
 | State        | Zustand                     | Minimal boilerplate for FSM workflow state                                                       |
