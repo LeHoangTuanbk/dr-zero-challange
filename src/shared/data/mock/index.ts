@@ -1,13 +1,13 @@
 export * from './anomaly'
 export * from './extraction'
-export * from './vendor'
+export * from './supplier'
 
 // Unified task queue — all 7 tasks in priority order
 import { anomalyTasks } from './anomaly'
 import { extractionTask } from './extraction'
-import { vendorTask } from './vendor'
+import { supplierTask } from './supplier'
 
-export type TaskCategory = 'anomaly' | 'extraction' | 'vendor'
+export type TaskCategory = 'anomaly' | 'extraction' | 'supplier'
 
 export interface QueueTask {
   id: string
@@ -38,11 +38,11 @@ export const taskQueue: QueueTask[] = [
     workflow: extractionTask.workflow,
   },
   {
-    id: vendorTask.id,
-    category: 'vendor' as TaskCategory,
-    priority: vendorTask.priority,
-    title_ja: vendorTask.title_ja,
-    facility_ja: vendorTask.campaign,
-    workflow: vendorTask.workflow,
+    id: supplierTask.id,
+    category: 'supplier' as TaskCategory,
+    priority: supplierTask.priority,
+    title_ja: supplierTask.title_ja,
+    facility_ja: supplierTask.campaign,
+    workflow: supplierTask.workflow,
   },
 ]

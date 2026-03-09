@@ -1,5 +1,6 @@
 import type { WorkflowConfig } from '../types'
 import { dataAnomalyReviewConfig } from './data-anomaly-review'
+import { supplierEngagementFollowupConfig } from './supplier-engagement-followup'
 
 /**
  * Global workflow registry.
@@ -7,8 +8,8 @@ import { dataAnomalyReviewConfig } from './data-anomaly-review'
  */
 export const WORKFLOW_CONFIGS: Record<string, WorkflowConfig> = {
   'data-anomaly-review': dataAnomalyReviewConfig,
-  // 'electricity-intake': electricityIntakeConfig,      ← Pattern B (coming soon)
-  // 'vendor-engagement-followup': vendorEngagementConfig, ← Pattern C (coming soon)
+  'supplier-engagement-followup': supplierEngagementFollowupConfig,
+  // 'electricity-intake': electricityIntakeConfig,  ← Pattern B (coming soon)
 }
 
 export function getWorkflowConfig(id: string): WorkflowConfig {
