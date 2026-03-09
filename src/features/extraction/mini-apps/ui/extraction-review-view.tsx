@@ -138,7 +138,7 @@ export const ExtractionReviewView = ({
       </div>
 
       {!isReadOnly && !isSaved && (
-        <div className="flex items-center justify-between pt-1">
+        <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
           <button
             onClick={onBack}
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"

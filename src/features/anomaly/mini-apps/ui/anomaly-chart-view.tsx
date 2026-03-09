@@ -125,7 +125,7 @@ export const AnomalyChartView = ({
     </div>
 
     {!isReadOnly && (
-      <div className="flex justify-end">
+      <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex justify-end">
         <button
           onClick={onNext}
           className={cn(

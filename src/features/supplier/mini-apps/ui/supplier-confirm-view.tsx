@@ -117,23 +117,6 @@ export const SupplierConfirmView = ({
             </p>
           </div>
 
-          {!isReadOnly && (
-            <div className="flex items-center justify-between">
-              <button
-                onClick={onBack}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                ← 戻る
-              </button>
-              <button
-                onClick={onSend}
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary/90 active:scale-[0.98] transition-all duration-150"
-              >
-                <Send className="size-3.5" />
-                {selectedSuppliers.length}件のメールを送信
-              </button>
-            </div>
-          )}
         </>
       )}
 
@@ -239,8 +222,29 @@ export const SupplierConfirmView = ({
             })}
           </div>
 
-          {!isReadOnly && (
-            <div className="flex justify-end pt-1">
+        </>
+      )}
+
+      {!isReadOnly && phase !== 'sending' && (
+        <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
+          {phase === 'idle' ? (
+            <>
+              <button
+                onClick={onBack}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                ← 戻る
+              </button>
+              <button
+                onClick={onSend}
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary/90 active:scale-[0.98] transition-all duration-150"
+              >
+                <Send className="size-3.5" />
+                {selectedSuppliers.length}件のメールを送信
+              </button>
+            </>
+          ) : (
+            <div className="flex justify-end w-full">
               <button
                 onClick={onComplete}
                 className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary/90 active:scale-[0.98] transition-all duration-150"
@@ -250,7 +254,7 @@ export const SupplierConfirmView = ({
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

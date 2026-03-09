@@ -58,7 +58,7 @@ export const AnomalyApproveView = ({
   }
 
   return (
-    <div className="flex flex-col gap-5 p-6 h-full">
+    <div className="flex flex-col gap-5 p-6">
       <div>
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
           {task.facility_ja} / {task.field_ja}
@@ -137,10 +137,8 @@ export const AnomalyApproveView = ({
         </p>
       </div>
 
-      <div className="flex-1" />
-
       {!isReadOnly && (
-        <div className="flex items-center justify-between gap-3">
+        <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
           <button
             onClick={onBack}
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
