@@ -111,5 +111,8 @@
     "notion",
     "jira",
     "o3"
-  ]
+  ],
+  "env": {                                                                                                    
+      "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "85"                                                                   
+    }
 }

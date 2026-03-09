@@ -1,16 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { AlertTriangle, CheckCircle2, Pencil, X, Check } from "lucide-react";
+import { useState } from 'react';
+import { AlertTriangle, CheckCircle2, Pencil, X, Check } from 'lucide-react';
 import type {
   AnomalyTask,
   AnomalyReviewField,
-} from "@shared/data/mock/anomaly";
-import { cn } from "@shared/lib/shadcn";
+} from '@shared/data/mock/anomaly';
+import { cn } from '@shared/lib/shadcn';
 
-// ─── Shared types ─────────────────────────────────────────────────────────────
-
-export type ReviewDecision = "accept_ai" | "manual" | "dismiss";
+export type ReviewDecision = 'accept_ai' | 'manual' | 'dismiss';
 
 export type AnomalyReviewViewProps = {
   task: AnomalyTask;
@@ -28,17 +26,15 @@ export type AnomalyReviewViewProps = {
   isReadOnly: boolean;
 };
 
-// ─── Confidence Badge ─────────────────────────────────────────────────────────
-
-function ConfidenceBadge({ pct }: { pct: number }) {
+const ConfidenceBadge = ({ pct }: { pct: number }) => {
   const isLow = pct < 80;
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold",
+        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold',
         isLow
-          ? "bg-red-50 text-red-700 ring-1 ring-red-200"
-          : "bg-green-50 text-green-700 ring-1 ring-green-200",
+          ? 'bg-red-50 text-red-700 ring-1 ring-red-200'
+          : 'bg-green-50 text-green-700 ring-1 ring-green-200',
       )}
     >
       {isLow ? (
@@ -49,18 +45,21 @@ function ConfidenceBadge({ pct }: { pct: number }) {
       {pct}%
     </span>
   );
-}
+};
 
-// ─── Editable Field Row ───────────────────────────────────────────────────────
-
-interface FieldRowProps {
+type FieldRowProps = {
   field: AnomalyReviewField;
   editedValue: string | undefined;
   onEdit: (val: string) => void;
   isReadOnly: boolean;
-}
+};
 
-function FieldRow({ field, editedValue, onEdit, isReadOnly }: FieldRowProps) {
+const FieldRow = ({
+  field,
+  editedValue,
+  onEdit,
+  isReadOnly,
+}: FieldRowProps) => {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(editedValue ?? field.value);
   const display = editedValue ?? field.value;
@@ -74,8 +73,8 @@ function FieldRow({ field, editedValue, onEdit, isReadOnly }: FieldRowProps) {
   return (
     <tr
       className={cn(
-        "border-b border-slate-100 last:border-0",
-        field.confidence_pct < 80 && "bg-red-50/30",
+        'border-b border-slate-100 last:border-0',
+        field.confidence_pct < 80 && 'bg-red-50/30',
       )}
     >
       <td className="py-3 pl-4 pr-3 text-sm font-medium text-slate-700 whitespace-nowrap w-36">
@@ -89,8 +88,8 @@ function FieldRow({ field, editedValue, onEdit, isReadOnly }: FieldRowProps) {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") commit();
-                if (e.key === "Escape") setEditing(false);
+                if (e.key === 'Enter') commit();
+                if (e.key === 'Escape') setEditing(false);
               }}
               className="flex-1 rounded-md border border-primary/60 px-2 py-1 text-sm outline-none ring-2 ring-primary/30"
             />
@@ -110,7 +109,7 @@ function FieldRow({ field, editedValue, onEdit, isReadOnly }: FieldRowProps) {
         ) : (
           <span
             className={cn(
-              isModified && "text-secondary-foreground font-medium",
+              isModified && 'text-secondary-foreground font-medium',
             )}
           >
             {display}
@@ -140,11 +139,9 @@ function FieldRow({ field, editedValue, onEdit, isReadOnly }: FieldRowProps) {
       </td>
     </tr>
   );
-}
+};
 
-// ─── View (purely presentational) ────────────────────────────────────────────
-
-export function AnomalyReviewView({
+export const AnomalyReviewView = ({
   task,
   fields,
   edits,
@@ -158,15 +155,14 @@ export function AnomalyReviewView({
   onDecide,
   onBack,
   isReadOnly,
-}: AnomalyReviewViewProps) {
+}: AnomalyReviewViewProps) => {
   return (
     <div className="flex flex-col gap-4 p-6 h-full">
-      {/* Header */}
       <div>
         <div className="flex items-center gap-2 mb-1">
           <span
             className={cn(
-              "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1",
+              'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1',
               modeBadge.color,
             )}
           >
@@ -180,7 +176,6 @@ export function AnomalyReviewView({
         <p className="mt-1 text-sm text-slate-500">{modeDescription}</p>
       </div>
 
-      {/* Low confidence alert */}
       {lowConfidenceCount > 0 && (
         <div className="flex items-center gap-2.5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5">
           <AlertTriangle className="size-4 text-amber-500 shrink-0" />
@@ -191,7 +186,6 @@ export function AnomalyReviewView({
         </div>
       )}
 
-      {/* Table */}
       <div className="flex-1 rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
         <table className="w-full">
           <thead>
@@ -224,7 +218,6 @@ export function AnomalyReviewView({
 
       <p className="text-xs text-slate-400 italic">{modeHint}</p>
 
-      {/* Actions */}
       {!isReadOnly && (
         <div className="flex items-center justify-between gap-3">
           <button
@@ -235,14 +228,14 @@ export function AnomalyReviewView({
           </button>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => onDecide("dismiss")}
+              onClick={() => onDecide('dismiss')}
               className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
             >
               却下
             </button>
             {hasEdits && (
               <button
-                onClick={() => onDecide("manual")}
+                onClick={() => onDecide('manual')}
                 className="rounded-lg border border-primary/40 bg-primary-50 px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-primary-100 transition-colors"
               >
                 手動修正で承認へ
@@ -250,7 +243,7 @@ export function AnomalyReviewView({
             )}
             {hasAiSuggestion && (
               <button
-                onClick={() => onDecide("accept_ai")}
+                onClick={() => onDecide('accept_ai')}
                 className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary-700 active:scale-[0.98] transition-all"
               >
                 AI推奨値で承認へ →
@@ -261,4 +254,4 @@ export function AnomalyReviewView({
       )}
     </div>
   );
-}
+};

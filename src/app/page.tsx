@@ -1,5 +1,5 @@
-import { AgenticLayout } from '@widgets/agentic-layout/agentic-layout'
+import { AgenticLayout } from '@widgets/agentic-layout';
 
 export default function Home() {
-  return <AgenticLayout />
+  return <AgenticLayout />;
 }

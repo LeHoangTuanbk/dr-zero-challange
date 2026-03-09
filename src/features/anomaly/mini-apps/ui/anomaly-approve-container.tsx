@@ -19,8 +19,6 @@ type ReviewOutput = {
 
 type SubmitState = 'idle' | 'submitting' | 'done';
 
-// ─── Container ────────────────────────────────────────────────────────────────
-
 const AnomalyApproveContainer = ({
   context,
   onComplete,

@@ -58,14 +58,6 @@ type WithWorkflowStepOptions = {
   skeleton?: MiniAppSkeletonVariant;
 };
 
-/**
- * HOC that wraps any mini-app with:
- * - Error boundary (graceful crash recovery)
- * - Skeleton fallback when context is not yet resolved
- *
- * Usage:
- *   export const AnomalyChartApp = withWorkflowStep(AnomalyChartView, { skeleton: 'chart' })
- */
 export function withWorkflowStep<P extends MiniAppProps>(
   Component: ComponentType<P>,
   options: WithWorkflowStepOptions = {},

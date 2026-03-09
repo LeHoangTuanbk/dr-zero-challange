@@ -53,7 +53,6 @@ export const SupplierComposeView = ({
       </div>
 
       <div className="grid grid-cols-[1fr_1.2fr] gap-4">
-        {/* Left: supplier selection */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
@@ -134,7 +133,6 @@ export const SupplierComposeView = ({
           </div>
         </div>
 
-        {/* Right: email preview */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
             <Mail className="size-3.5" />

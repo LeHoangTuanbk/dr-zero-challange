@@ -1,23 +1,18 @@
-"use client";
+'use client';
 
-import { createElement } from "react";
-import { useWorkflowStore } from "@shared/store/workflow-store";
-import { getWorkflowConfig } from "@shared/lib/workflow/configs";
+import { createElement } from 'react';
+import { useWorkflowStore } from '@shared/store/workflow-store';
+import { getWorkflowConfig } from '@shared/lib/workflow/configs';
 import {
   getActiveSteps,
   getActiveStepIndex,
-} from "@shared/lib/workflow/engine";
-import { getMiniApp } from "./registry";
-import { WorkflowProgress } from "./workflow-progress";
-import { MiniAppSkeleton } from "@shared/ui/mini-app/mini-app-skeleton";
-import type { MiniAppProps } from "@shared/lib/workflow/types";
+} from '@shared/lib/workflow/engine';
+import { getMiniApp } from './registry';
+import { WorkflowProgress } from './workflow-progress';
+import { MiniAppSkeleton } from '@shared/ui/mini-app/mini-app-skeleton';
+import type { MiniAppProps } from '@shared/lib/workflow/types';
 
-// ─── Module-level components ───────────────────────────────────────────────────
-// Defined outside Canvas to avoid React 19 "created during render" error.
-// React 19 flags any component-type variable that appears to be assigned/created
-// inside a render function body. Moving the dynamic lookup here keeps it stable.
-
-function EmptyState() {
+const EmptyState = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-4 text-center p-8">
       <div className="size-16 rounded-2xl bg-muted flex items-center justify-center">
@@ -33,15 +28,12 @@ function EmptyState() {
       </div>
     </div>
   );
-}
+};
 
 interface MiniAppHostProps extends MiniAppProps {
   miniAppKey: string;
 }
 
-/** Resolves mini-app key → component and renders via createElement (not JSX).
- *  Using createElement bypasses React 19's JSX-static-analysis check that flags
- *  any locally-assigned variable used as a JSX element type. */
 function MiniAppHost({ miniAppKey, ...props }: MiniAppHostProps) {
   const App = getMiniApp(miniAppKey);
   if (!App) {
@@ -53,8 +45,6 @@ function MiniAppHost({ miniAppKey, ...props }: MiniAppHostProps) {
   }
   return createElement(App, props);
 }
-
-// ─── Canvas ───────────────────────────────────────────────────────────────────
 
 export function Canvas() {
   const {
@@ -70,9 +60,8 @@ export function Canvas() {
   const state = workflowStates[activeTaskId];
   if (!state) return <EmptyState />;
 
-  // Resolve full context first — needed for skip() predicates that read task fields
   const resolvedCtx = getActiveContext();
-  if (!resolvedCtx) return <MiniAppSkeleton />;
+  if (!resolvedCtx?.task) return <MiniAppSkeleton />;
 
   const config = getWorkflowConfig(resolvedCtx.task.workflow);
   const activeSteps = getActiveSteps(config, resolvedCtx);
@@ -86,11 +75,10 @@ export function Canvas() {
     state.currentStepId,
   );
   const completedStepIds = activeSteps.slice(0, currentIndex).map((s) => s.id);
-  const isCompleted = state.status === "completed";
+  const isCompleted = state.status === 'completed';
 
   return (
     <div className="flex flex-col h-full">
-      {/* Canvas header */}
       <div className="flex items-center justify-between px-6 py-3.5 border-b border-border bg-card shrink-0">
         <WorkflowProgress
           steps={activeSteps}
@@ -102,7 +90,6 @@ export function Canvas() {
         </span>
       </div>
 
-      {/* key forces remount + slide-in animation on step change */}
       <div
         key={`${activeTaskId}:${state.currentStepId}`}
         className="flex-1 overflow-y-auto animate-in slide-in-from-right-3 duration-250"

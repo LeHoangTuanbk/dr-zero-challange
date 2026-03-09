@@ -7,9 +7,7 @@ import type { MiniAppProps, StepOutput } from '@shared/lib/workflow/types';
 import { withWorkflowStep } from '@shared/ui/mini-app/with-workflow-step';
 import { AnomalyReviewView, type ReviewDecision } from './anomaly-review-view';
 
-// ─── Mode config (logic lives in container) ───────────────────────────────────
-
-function resolveModeConfig(task: AnomalyTask) {
+const resolveModeConfig = (task: AnomalyTask) => {
   switch (task.anomaly_type) {
     case 'outlier':
       return {
@@ -48,20 +46,17 @@ function resolveModeConfig(task: AnomalyTask) {
         hint: 'AI推奨値を確認するか、正しいフォーマットで手動修正してください。',
       };
   }
-}
+};
 
-// ─── Container ────────────────────────────────────────────────────────────────
-
-function AnomalyReviewContainer({
+const AnomalyReviewContainer = ({
   context,
   onComplete,
   onBack,
   isReadOnly,
-}: MiniAppProps) {
+}: MiniAppProps) => {
   const task = context.task as AnomalyTask;
   const fields = anomalyReviewFields[task.id] ?? [];
 
-  // Hydrate edits from prior step output if user navigates back
   const [edits, setEdits] = useState<Record<string, string>>(() => {
     const prior = context.stepOutputs['review'] as
       | { edits?: Record<string, string> }
@@ -117,7 +112,7 @@ function AnomalyReviewContainer({
       isReadOnly={isReadOnly ?? false}
     />
   );
-}
+};
 
 export const AnomalyReviewApp = withWorkflowStep(AnomalyReviewContainer, {
   skeleton: 'review',

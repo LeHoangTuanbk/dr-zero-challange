@@ -6,8 +6,6 @@ import type { MiniAppProps } from '@shared/lib/workflow/types';
 import { withWorkflowStep } from '@shared/ui/mini-app/with-workflow-step';
 import { SupplierStatusView } from './supplier-status-view';
 
-// ─── Container ────────────────────────────────────────────────────────────────
-
 const SupplierStatusContainer = ({
   context,
   onComplete,

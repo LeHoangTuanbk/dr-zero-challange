@@ -24,8 +24,9 @@ import {
 } from '@shared/lib/workflow/engine';
 import { getWorkflowConfig } from '@shared/lib/workflow/configs';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveRawTask(taskId: string): any {
+type RawTask = { workflow: string };
+
+function resolveRawTask(taskId: string): RawTask | null {
   return (
     anomalyTasks.find((t) => t.id === taskId) ??
     (extractionTask.id === taskId ? extractionTask : null) ??
@@ -40,7 +41,6 @@ function buildContext(
   return { taskId, task: resolveRawTask(taskId), stepOutputs };
 }
 
-// Narratives keyed by taskId:stepId — injected from mock, swappable with real API
 const NARRATIVES: Record<string, string> = {
   ...anomalyNarratives,
   ...supplierNarratives,
@@ -64,8 +64,6 @@ function makeNarrativeMsg(
   };
 }
 
-// ─── Store interface ──────────────────────────────────────────────────────────
-
 type WorkflowStore = {
   tasks: QueueTask[];
   activeTaskId: string | null;
@@ -77,11 +75,8 @@ type WorkflowStore = {
   goBack: () => void;
   dismissTask: () => void;
 
-  // Derived — called from components to avoid re-computing in render
   getActiveContext: () => WorkflowContext | null;
 };
-
-// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
   tasks: taskQueue,
