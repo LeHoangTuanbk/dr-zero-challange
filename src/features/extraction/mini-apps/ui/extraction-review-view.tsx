@@ -11,7 +11,7 @@ export type ExtractionReviewViewProps = {
   isSaved: boolean;
   onEdit: (key: string, val: string) => void;
   onSave: () => void;
-  onBack: () => void;
+  onBack?: () => void;
   isReadOnly: boolean;
 };
 
@@ -146,12 +146,14 @@ export const ExtractionReviewView = ({
 
       {!isReadOnly && !isSaved && (
         <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
-          <button
-            onClick={onBack}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← 戻る
-          </button>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← 戻る
+            </button>
+          )}
           <button
             onClick={onSave}
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary/90 active:scale-[0.98] transition-all"

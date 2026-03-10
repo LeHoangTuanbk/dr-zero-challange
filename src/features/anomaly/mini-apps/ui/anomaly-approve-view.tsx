@@ -17,7 +17,7 @@ export type AnomalyApproveViewProps = {
   isDone: boolean;
   isReadOnly: boolean;
   onApprove: () => void;
-  onBack: () => void;
+  onBack?: () => void;
 };
 
 export const AnomalyApproveView = ({
@@ -139,12 +139,14 @@ export const AnomalyApproveView = ({
 
       {!isReadOnly && (
         <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <RotateCcw className="size-3.5" /> 編集に戻る
-          </button>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <RotateCcw className="size-3.5" /> 編集に戻る
+            </button>
+          )}
           <button
             onClick={onApprove}
             disabled={isSubmitting}

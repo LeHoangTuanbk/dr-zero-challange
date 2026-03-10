@@ -15,7 +15,7 @@ export type SupplierComposeViewProps = {
   onToggleAll: () => void;
   onPreview: (id: string) => void;
   onNext: (selectedIds: string[]) => void;
-  onBack: () => void;
+  onBack?: () => void;
   isReadOnly: boolean;
 };
 
@@ -160,12 +160,14 @@ export const SupplierComposeView = ({
 
       {!isReadOnly && (
         <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
-          <button
-            onClick={onBack}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← 戻る
-          </button>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← 戻る
+            </button>
+          )}
           <button
             onClick={() => onNext([...selectedIds])}
             disabled={selectedIds.size === 0}

@@ -31,7 +31,7 @@ export type StepOutput = Record<string, unknown>;
 export type MiniAppProps = {
   context: WorkflowContext;
   onComplete: (output: StepOutput) => void;
-  onBack: () => void;
+  onBack?: () => void;
   isReadOnly?: boolean;
 };
 

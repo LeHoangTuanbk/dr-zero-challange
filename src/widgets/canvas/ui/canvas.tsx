@@ -87,7 +87,7 @@ export const Canvas = () => {
           miniAppKey={currentStep.miniApp}
           context={resolvedCtx}
           onComplete={(output) => completeStep(currentStep.id, output)}
-          onBack={goBack}
+          onBack={currentIndex > 0 ? goBack : undefined}
           isReadOnly={isCompleted}
         />
       </div>

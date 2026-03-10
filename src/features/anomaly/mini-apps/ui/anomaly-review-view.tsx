@@ -22,7 +22,7 @@ export type AnomalyReviewViewProps = {
   modeBadge: { label: string; color: string };
   onEdit: (fieldJa: string, value: string) => void;
   onDecide: (decision: ReviewDecision) => void;
-  onBack: () => void;
+  onBack?: () => void;
   isReadOnly: boolean;
 };
 
@@ -226,12 +226,14 @@ export const AnomalyReviewView = ({
 
       {!isReadOnly && (
         <div className="sticky bottom-0 bg-card border-t border-border -mx-6 px-6 py-3 flex items-center justify-between gap-3">
-          <button
-            onClick={onBack}
-            className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
-          >
-            ← 戻る
-          </button>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
+            >
+              ← 戻る
+            </button>
+          )}
           <div className="flex items-center gap-2">
             <button
               onClick={() => onDecide('dismiss')}
