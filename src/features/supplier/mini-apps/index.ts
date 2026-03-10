@@ -1,3 +1,3 @@
-export { SupplierStatusApp } from './ui/supplier-status-container';
-export { SupplierComposeApp } from './ui/supplier-compose-container';
-export { SupplierConfirmApp } from './ui/supplier-confirm-container';
+export { SupplierStatusApp } from './supplier-status';
+export { SupplierComposeApp } from './supplier-compose';
+export { SupplierConfirmApp } from './supplier-confirm';

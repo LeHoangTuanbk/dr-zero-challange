@@ -64,6 +64,8 @@ skip_if_not_outlier: (ctx) => ctx.task.anomaly_type !== 'outlier';
 
 Adding a new branch = one predicate function + one `"skip"` key in JSON. No component changes required.
 
+The list of mini-apps for each feature can be found under [`features/*/mini-apps`](./src/features).
+
 Each mini-app follows **Container/Presentational** split. Containers own state and data logic; views are pure render functions. The `withWorkflowStep` HOC wraps every container with an error boundary and loading skeleton.
 
 ---
@@ -169,21 +171,21 @@ workflowStates: {
                      all steps show ✓
 ```
 
-**`selectTask(taskId)`** — two branches:
+`**selectTask(taskId)**` — two branches:
 
 - First open → resolves workflow config, evaluates skip predicates, initializes state at first active step
 - Already opened → restores existing state; user continues exactly where they left off
 
-**`completeStep(stepId, output)`**:
+`**completeStep(stepId, output)**`:
 
 1. Writes `output` into `stepOutputs[stepId]` (append-only — prior steps are never mutated)
 2. Re-evaluates `getNextStepId()` against updated context
 3. If next step exists → `currentStepId = nextStepId`
 4. If last step → `status = 'completed'`, `isReadOnly = true`
 
-**`goBack()`** — sets `currentStepId` to previous active step. Prior `stepOutputs` are preserved, so the mini-app re-mounts with its last edited state intact. No data is lost on back navigation.
+`**goBack()**` — sets `currentStepId` to previous active step. Prior `stepOutputs` are preserved, so the mini-app re-mounts with its last edited state intact. No data is lost on back navigation.
 
-**`stepOutputs` as inter-step data contract**: each mini-app reads from `context.stepOutputs[priorStepId]` and writes via `onComplete(output)`. This is the only communication channel between steps — no shared component state, no prop drilling:
+`**stepOutputs` as inter-step data contract\*\*: each mini-app reads from `context.stepOutputs[priorStepId]` and writes via `onComplete(output)`. This is the only communication channel between steps — no shared component state, no prop drilling:
 
 ```
 ExtractionUpload  onComplete({ fileName, extractedAt })
