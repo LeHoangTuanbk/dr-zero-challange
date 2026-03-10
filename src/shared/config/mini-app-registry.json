@@ -1,47 +1,137 @@
 {
   "$schema": "https://json-schema.org/v1.0.0/2026-03-909",
-  "$comment": "Configuration-Driven UI registry. Adding a mini-app = one entry here. Feature chunk loaders in registry.ts are the only other change needed.",
+  "$comment": "Agent-readable mini-app manifest. Each entry declares what the mini-app does, what it needs (input), and what it produces (output). An AI agent uses this to auto-compose workflows and surface the right UI for a given task.",
 
   "AnomalyChart": {
     "feature": "anomaly",
     "export": "AnomalyChartApp",
-    "title": "Anomaly Chart"
+    "title": "Anomaly Chart",
+    "description": "Visualizes anomaly distribution across facilities. Helps the user understand scope before reviewing individual records.",
+    "prev": [],
+    "next": ["AnomalyReview"],
+    "input": {
+      "task.facility_ja": "Facility name to highlight in chart",
+      "task.anomaly_type": "Used by skip predicate — chart is shown only for outlier type"
+    },
+    "output": {}
   },
+
   "AnomalyReview": {
     "feature": "anomaly",
     "export": "AnomalyReviewApp",
-    "title": "Anomaly Review"
+    "title": "Anomaly Review",
+    "description": "Presents AI-detected anomaly fields for a specific task. User reviews confidence scores, edits values if needed, and chooses an action: accept AI recommendation, apply manual correction, or dismiss.",
+    "prev": ["AnomalyChart"],
+    "next": ["AnomalyApprove"],
+    "input": {
+      "task.id": "Used to load the correct anomaly review fields",
+      "task.anomaly_type": "Determines which fields and actions are available"
+    },
+    "output": {
+      "decision": "'accept_ai' | 'manual' | 'dismiss'",
+      "finalValue": "The corrected value string chosen by the user",
+      "fromValue": "Original detected value before correction"
+    }
   },
+
   "AnomalyApprove": {
     "feature": "anomaly",
     "export": "AnomalyApproveApp",
-    "title": "Anomaly Approve"
+    "title": "Anomaly Approve",
+    "description": "Final confirmation step. Shows a before/after diff of the correction and asks the user to approve or go back. On approval, the change is committed to the emission record.",
+    "prev": ["AnomalyReview"],
+    "next": [],
+    "input": {
+      "stepOutputs.review.decision": "Determines display mode (AI accept vs manual vs dismiss)",
+      "stepOutputs.review.finalValue": "The corrected value to show in the diff card",
+      "stepOutputs.review.fromValue": "The original value to show in the diff card"
+    },
+    "output": {
+      "approvedAt": "Unix timestamp of approval"
+    }
   },
 
   "ExtractionUpload": {
     "feature": "extraction",
     "export": "ExtractionUploadApp",
-    "title": "File Upload"
+    "title": "File Upload",
+    "description": "Drag-and-drop file upload zone. Accepts PDF, Excel, and image formats. Simulates AI extraction pipeline with progress phases: idle → uploading → extracting → done.",
+    "prev": [],
+    "next": ["ExtractionReview"],
+    "input": {
+      "task.facility_ja": "Displayed as upload context label",
+      "task.period": "Displayed as the expected billing period"
+    },
+    "output": {
+      "fileName": "Name of the uploaded file, passed to the next step for display",
+      "extractedAt": "Unix timestamp of when extraction completed"
+    }
   },
+
   "ExtractionReview": {
     "feature": "extraction",
     "export": "ExtractionReviewApp",
-    "title": "Extraction Review"
+    "title": "Extraction Review",
+    "description": "Displays AI-extracted fields from the uploaded document. Fields with confidence < 80% are flagged for manual review. User can edit values inline; the badge changes from confidence % to '手動' on edit.",
+    "prev": ["ExtractionUpload"],
+    "next": [],
+    "input": {
+      "stepOutputs.upload.fileName": "Shown in the header as the source document name"
+    },
+    "output": {
+      "edits": "Map of field_key → edited value string",
+      "finalFields": "Full field array with edits applied",
+      "facility_ja": "Facility the data belongs to",
+      "period": "Billing period of the submitted data",
+      "savedAt": "Unix timestamp of save action"
+    }
   },
 
   "SupplierStatus": {
     "feature": "supplier",
     "export": "SupplierStatusApp",
-    "title": "Supplier Status"
+    "title": "Supplier Status",
+    "description": "Overview of Scope 3 supplier response status. Shows a donut chart of responded/pending/overdue counts, response rate progress bar, AI insights, and a list of non-responding suppliers.",
+    "prev": [],
+    "next": ["SupplierCompose"],
+    "input": {
+      "task.total_suppliers": "Total number of suppliers in this campaign",
+      "task.responded": "Count of suppliers who responded",
+      "task.pending": "Count of pending suppliers",
+      "task.overdue": "Count of overdue suppliers",
+      "task.deadline_days_from_now": "Days remaining until deadline"
+    },
+    "output": {}
   },
+
   "SupplierCompose": {
     "feature": "supplier",
     "export": "SupplierComposeApp",
-    "title": "Email Compose"
+    "title": "Email Compose",
+    "description": "Compose and preview personalized reminder emails. User selects which suppliers to contact (defaulting to all non-responders) and previews the AI-generated email body per supplier before sending.",
+    "prev": ["SupplierStatus"],
+    "next": ["SupplierConfirm"],
+    "input": {
+      "task": "Supplier task for campaign context"
+    },
+    "output": {
+      "selectedIds": "Array of supplier IDs chosen to receive the reminder email"
+    }
   },
+
   "SupplierConfirm": {
     "feature": "supplier",
     "export": "SupplierConfirmApp",
-    "title": "Send Confirmation"
+    "title": "Send Confirmation",
+    "description": "Final send step. Lists selected suppliers with their personalized email subjects, warns that send is irreversible, then executes the send. Shows per-supplier success/failure results with individual retry capability.",
+    "prev": ["SupplierCompose"],
+    "next": [],
+    "input": {
+      "stepOutputs.compose.selectedIds": "Supplier IDs to send emails to"
+    },
+    "output": {
+      "sentAt": "Unix timestamp when send was triggered",
+      "results": "Array of { supplierId, name, success } send results"
+    }
   }
 }
