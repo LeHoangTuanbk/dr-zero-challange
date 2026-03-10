@@ -11,24 +11,7 @@ import { getMiniApp } from './registry';
 import { WorkflowProgress } from './workflow-progress';
 import { MiniAppSkeleton } from '@shared/ui/mini-app/mini-app-skeleton';
 import type { MiniAppProps } from '@shared/lib/workflow/types';
-
-const EmptyState = () => {
-  return (
-    <div className="flex flex-col items-center justify-center h-full gap-4 text-center p-8">
-      <div className="size-16 rounded-2xl bg-muted flex items-center justify-center">
-        <span className="text-2xl">📋</span>
-      </div>
-      <div>
-        <p className="text-sm font-medium text-foreground">
-          タスクを選択してください
-        </p>
-        <p className="text-xs text-muted-foreground mt-1">
-          左のリストからタスクをクリックして開始
-        </p>
-      </div>
-    </div>
-  );
-};
+import { EmptyState } from './empty-state';
 
 type MiniAppHostProps = MiniAppProps & {
   miniAppKey: string;
@@ -50,7 +33,7 @@ const MiniAppHost = ({ miniAppKey, ...props }: MiniAppHostProps) => {
   );
 };
 
-export function Canvas() {
+export const Canvas = () => {
   const {
     activeTaskId,
     workflowStates,
@@ -110,4 +93,4 @@ export function Canvas() {
       </div>
     </div>
   );
-}
+};

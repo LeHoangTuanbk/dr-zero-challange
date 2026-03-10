@@ -5,51 +5,43 @@
   "AnomalyChart": {
     "feature": "anomaly",
     "export": "AnomalyChartApp",
-    "title": "Anomaly Chart",
-    "pattern": "A"
+    "title": "Anomaly Chart"
   },
   "AnomalyReview": {
     "feature": "anomaly",
     "export": "AnomalyReviewApp",
-    "title": "Anomaly Review",
-    "pattern": "A"
+    "title": "Anomaly Review"
   },
   "AnomalyApprove": {
     "feature": "anomaly",
     "export": "AnomalyApproveApp",
-    "title": "Anomaly Approve",
-    "pattern": "A"
+    "title": "Anomaly Approve"
   },
 
   "ExtractionUpload": {
     "feature": "extraction",
     "export": "ExtractionUploadApp",
-    "title": "File Upload",
-    "pattern": "B"
+    "title": "File Upload"
   },
   "ExtractionReview": {
     "feature": "extraction",
     "export": "ExtractionReviewApp",
-    "title": "Extraction Review",
-    "pattern": "B"
+    "title": "Extraction Review"
   },
 
   "SupplierStatus": {
     "feature": "supplier",
     "export": "SupplierStatusApp",
-    "title": "Supplier Status",
-    "pattern": "C"
+    "title": "Supplier Status"
   },
   "SupplierCompose": {
     "feature": "supplier",
     "export": "SupplierComposeApp",
-    "title": "Email Compose",
-    "pattern": "C"
+    "title": "Email Compose"
   },
   "SupplierConfirm": {
     "feature": "supplier",
     "export": "SupplierConfirmApp",
-    "title": "Send Confirmation",
-    "pattern": "C"
+    "title": "Send Confirmation"
   }
 }
