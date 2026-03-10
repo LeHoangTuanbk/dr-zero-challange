@@ -52,7 +52,7 @@ type AgentEvent = {
   type: 'task_queued' | 'step_ready' | 'extraction_result' | 'anomaly_detected';
   taskId: string;
   stepId?: string;
-  payload: Record<string, unknown>; // typed per event type
+  payload: Record<string, unknown>;
   confidence?: number;
   timestamp: number;
 };
@@ -72,7 +72,30 @@ Example flow for Pattern B:
 
 ## 3. State and Transitions
 
-Workflow state is a finite state machine per task, managed in Zustand:
+Workflow state is a per-task finite state machine stored in Zustand. Each task gets an independent entry in `workflowStates`, keyed by `taskId`:
+
+```typescript
+workflowStates: {
+  'task-anm-001': {
+    currentStepId: 'approve',
+    status: 'active',
+    stepOutputs: {
+      chart:  {},
+      review: { decision: 'accept_ai', finalValue: '128,432 kWh' },
+    },
+  },
+  'task-inp-001': {
+    currentStepId: 'review',
+    status: 'completed',
+    stepOutputs: {
+      upload: { fileName: 'invoice_oct.pdf', extractedAt: 1709123456 },
+      review: { edits: {}, finalFields: [...], savedAt: 1709123999 },
+    },
+  },
+}
+```
+
+**Task lifecycle**:
 
 ```
            selectTask()
@@ -88,7 +111,28 @@ Workflow state is a finite state machine per task, managed in Zustand:
                           [dismissed]
 ```
 
-**StepOutputs as an append-only log**: each completed step writes to `stepOutputs[stepId]`. When the user navigates back (`goBack()`), the step re-mounts with its prior output already in context — edits are preserved across back/forward navigation.
+**`selectTask(taskId)`** — two branches:
+- First open → resolves workflow config, evaluates skip predicates, initializes state at first active step
+- Already opened → restores existing state; user continues exactly where they left off
+
+**`completeStep(stepId, output)`**:
+1. Writes `output` into `stepOutputs[stepId]` (append-only — prior steps are never mutated)
+2. Re-evaluates `getNextStepId()` against updated context
+3. If next step exists → `currentStepId = nextStepId`
+4. If last step → `status = 'completed'`, `isReadOnly = true`
+
+**`goBack()`** — sets `currentStepId` to previous active step. Prior `stepOutputs` are preserved, so the mini-app re-mounts with its last edited state intact. No data is lost on back navigation.
+
+**`stepOutputs` as inter-step data contract**: each mini-app reads from `context.stepOutputs[priorStepId]` and writes via `onComplete(output)`. This is the only communication channel between steps — no shared component state, no prop drilling:
+
+```
+ExtractionUpload  onComplete({ fileName, extractedAt })
+                       │
+                       ▼  stored in stepOutputs['upload']
+                       │
+ExtractionReview  context.stepOutputs['upload'].fileName
+                  → displays "AI 抽出結果 · invoice_oct.pdf"
+```
 
 **Active step resolution**: `getActiveSteps(config, context)` re-evaluates skip predicates on every transition. A step can become active or skipped mid-workflow based on data from a prior step, with no component changes needed.
 
@@ -109,7 +153,6 @@ Workflow state is a finite state machine per task, managed in Zustand:
 ## With More Time
 
 - **Real SSE integration**: replace mock narratives with a live `/api/agent-events` stream; the store interface is already shaped for it
-- **Field mapping step** (Pattern B): after extraction, a drag-to-map UI where users confirm which extracted fields map to database columns
 - **Registry from API**: `mini-app-registry.json` is already structured for remote fetch. `FEATURE_LOADERS` stays as a static allowlist (security boundary); only the JSON schema comes from a config service
 - **Module Federation - Micro frontend**: each feature deployed as an independent remote — the registry's `feature` field would become a `remoteUrl`, enabling zero-downtime feature rollouts without a full frontend redeploy
 - **Two-way AI chat**: the current chat panel is one-way (AI narrates per step). Using LLM, it becomes a real conversational assistant — the system prompt carries full task context (`taskId`, current step,...), so the user can ask any questions and get support from AI.
