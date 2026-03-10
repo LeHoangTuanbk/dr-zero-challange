@@ -1,0 +1,14 @@
+{
+  "facilities": [
+    { "facility_ja": "名古屋工場", "facility_en": "Nagoya Factory", "anomaly_count": 3 },
+    { "facility_ja": "福岡倉庫", "facility_en": "Fukuoka Warehouse", "anomaly_count": 2 },
+    { "facility_ja": "大阪支社", "facility_en": "Osaka Branch", "anomaly_count": 1 },
+    { "facility_ja": "本社ビル", "facility_en": "Headquarters", "anomaly_count": 1 },
+    { "facility_ja": "札幌支社", "facility_en": "Sapporo Branch", "anomaly_count": 1 }
+  ],
+  "insights": [
+    "名古屋工場で最も多くの異常が検出されています",
+    "外れ値タイプの異常が全体の40%を占めています",
+    "高優先度の異常が2件、対応が必要です"
+  ]
+}

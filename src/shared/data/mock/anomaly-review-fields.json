@@ -1,0 +1,39 @@
+{
+  "task-anm-001": [
+    { "field_ja": "施設", "field_en": "Facility", "value": "名古屋工場", "confidence_pct": 100, "editable": false },
+    { "field_ja": "項目", "field_en": "Field", "value": "電力消費量", "confidence_pct": 100, "editable": false },
+    { "field_ja": "元の値", "field_en": "Original value", "value": "125,847 kWh", "confidence_pct": 100, "editable": false },
+    { "field_ja": "検出値", "field_en": "Detected value", "value": "553,726 kWh", "confidence_pct": 45, "editable": true },
+    { "field_ja": "AI推奨値", "field_en": "AI suggested value", "value": "128,432 kWh", "confidence_pct": 92, "editable": true },
+    { "field_ja": "異常理由", "field_en": "Anomaly reason", "value": "入力桁ミス（10倍）の可能性", "confidence_pct": 88, "editable": false }
+  ],
+  "task-anm-002": [
+    { "field_ja": "施設", "field_en": "Facility", "value": "福岡倉庫", "confidence_pct": 100, "editable": false },
+    { "field_ja": "項目", "field_en": "Field", "value": "燃料消費", "confidence_pct": 100, "editable": false },
+    { "field_ja": "元の値", "field_en": "Original value", "value": "2,450 L", "confidence_pct": 100, "editable": false },
+    { "field_ja": "検出値", "field_en": "Detected value", "value": "8,500 L", "confidence_pct": 52, "editable": true },
+    { "field_ja": "AI推奨値", "field_en": "AI suggested value", "value": "2,510 L", "confidence_pct": 89, "editable": true },
+    { "field_ja": "異常理由", "field_en": "Anomaly reason", "value": "計測センサー誤作動の可能性", "confidence_pct": 81, "editable": false }
+  ],
+  "task-anm-003": [
+    { "field_ja": "施設", "field_en": "Facility", "value": "大阪支社", "confidence_pct": 100, "editable": false },
+    { "field_ja": "項目", "field_en": "Field", "value": "ガス使用量", "confidence_pct": 100, "editable": false },
+    { "field_ja": "元の値", "field_en": "Original value", "value": "(missing)", "confidence_pct": 100, "editable": false },
+    { "field_ja": "AI推奨値", "field_en": "AI suggested value", "value": "3,200 m³", "confidence_pct": 74, "editable": true },
+    { "field_ja": "欠損理由", "field_en": "Missing reason", "value": "前月比データ未送信", "confidence_pct": 91, "editable": false }
+  ],
+  "task-anm-004": [
+    { "field_ja": "施設", "field_en": "Facility", "value": "本社ビル", "confidence_pct": 100, "editable": false },
+    { "field_ja": "項目", "field_en": "Field", "value": "水道料金", "confidence_pct": 100, "editable": false },
+    { "field_ja": "重複件数", "field_en": "Duplicate count", "value": "2件", "confidence_pct": 97, "editable": false },
+    { "field_ja": "請求金額", "field_en": "Billed amount", "value": "¥125,000", "confidence_pct": 100, "editable": false },
+    { "field_ja": "重複理由", "field_en": "Duplicate reason", "value": "同一請求書の二重登録", "confidence_pct": 95, "editable": false }
+  ],
+  "task-anm-005": [
+    { "field_ja": "施設", "field_en": "Facility", "value": "札幌支社", "confidence_pct": 100, "editable": false },
+    { "field_ja": "項目", "field_en": "Field", "value": "契約番号", "confidence_pct": 100, "editable": false },
+    { "field_ja": "検出値", "field_en": "Detected value", "value": "ABC-123", "confidence_pct": 100, "editable": true },
+    { "field_ja": "期待フォーマット", "field_en": "Expected format", "value": "XXX-XXXX", "confidence_pct": 100, "editable": false },
+    { "field_ja": "AI推奨値", "field_en": "AI suggested value", "value": "ABC-0123", "confidence_pct": 83, "editable": true }
+  ]
+}

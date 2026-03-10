@@ -1,15 +1,8 @@
-'use client'
+'use client';
 
-import type { CSSProperties } from 'react'
-import { cn } from '@shared/lib/shadcn'
+import { Bone } from './bone';
 
-function Bone({ className, style }: { className?: string; style?: CSSProperties }) {
-  return (
-    <div className={cn('animate-pulse rounded-md bg-slate-100', className)} style={style} />
-  )
-}
-
-function ChartSkeleton() {
+const ChartSkeleton = () => {
   return (
     <div className="flex flex-col gap-6 p-6 h-full">
       <div className="flex justify-between items-start">
@@ -21,7 +14,11 @@ function ChartSkeleton() {
       </div>
       <div className="flex-1 rounded-xl border border-slate-100 p-4 flex items-end gap-3">
         {[40, 70, 30, 25, 20].map((h, i) => (
-          <Bone key={i} className="flex-1 rounded-t-md" style={{ height: `${h}%` }} />
+          <Bone
+            key={i}
+            className="flex-1 rounded-t-md"
+            style={{ height: `${h}%` }}
+          />
         ))}
       </div>
       <div className="rounded-xl border border-slate-100 p-4 flex flex-col gap-2">
@@ -31,10 +28,10 @@ function ChartSkeleton() {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-function ReviewSkeleton() {
+const ReviewSkeleton = () => {
   return (
     <div className="flex flex-col gap-5 p-6 h-full">
       <div className="flex flex-col gap-2">
@@ -50,7 +47,10 @@ function ReviewSkeleton() {
           ))}
         </div>
         {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="flex gap-4 px-4 py-3.5 border-b border-slate-50 last:border-0">
+          <div
+            key={i}
+            className="flex gap-4 px-4 py-3.5 border-b border-slate-50 last:border-0"
+          >
             <Bone className="h-3 w-1/4" />
             <Bone className="h-3 flex-1" />
             <Bone className="h-5 w-12 rounded-full" />
@@ -58,10 +58,10 @@ function ReviewSkeleton() {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-function ApproveSkeleton() {
+const ApproveSkeleton = () => {
   return (
     <div className="flex flex-col gap-6 p-6 h-full">
       <div className="flex flex-col gap-2">
@@ -93,26 +93,27 @@ function ApproveSkeleton() {
         <Bone className="h-10 w-28 rounded-lg" />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export type MiniAppSkeletonVariant = 'chart' | 'review' | 'approve' | 'default'
+export type MiniAppSkeletonVariant = 'chart' | 'review' | 'approve' | 'default';
 
-interface MiniAppSkeletonProps {
-  variant?: MiniAppSkeletonVariant
-}
+type MiniAppSkeletonProps = {
+  variant?: MiniAppSkeletonVariant;
+};
 
-export function MiniAppSkeleton({ variant = 'default' }: MiniAppSkeletonProps) {
-  if (variant === 'chart') return <ChartSkeleton />
-  if (variant === 'review') return <ReviewSkeleton />
-  if (variant === 'approve') return <ApproveSkeleton />
+export const MiniAppSkeleton = ({
+  variant = 'default',
+}: MiniAppSkeletonProps) => {
+  if (variant === 'chart') return <ChartSkeleton />;
+  if (variant === 'review') return <ReviewSkeleton />;
+  if (variant === 'approve') return <ApproveSkeleton />;
 
-  // Generic default
   return (
     <div className="flex flex-col gap-4 p-6">
       <Bone className="h-5 w-48" />
       <Bone className="h-40 w-full rounded-xl" />
       <Bone className="h-24 w-full rounded-xl" />
     </div>
-  )
-}
+  );
+};
