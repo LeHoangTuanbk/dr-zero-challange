@@ -8,11 +8,11 @@ import {
   getPrevStepId,
   isLastStep,
   isFirstStep,
-} from '@shared/lib/workflow/engine';
+} from '../shared/lib/workflow/engine';
 import type {
   WorkflowConfig,
   WorkflowContext,
-} from '@shared/lib/workflow/types';
+} from '../shared/lib/workflow/types';
 
 const makeCtx = (
   taskId = 'task-001',
