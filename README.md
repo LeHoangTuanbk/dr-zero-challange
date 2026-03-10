@@ -1,6 +1,7 @@
 # Dr.Zero — AI-Powered Decarbonization Platform
 
 **Live demo:** [VERCEL_URL](https://dr-zero-challange.vercel.app/)
+**Video demo:** [VIDEO DEMO](https://drive.google.com/file/d/1oat4mzLwh538f8iq4_YAksmHi56geW5H/view?usp=sharing)
 
 ---
 
