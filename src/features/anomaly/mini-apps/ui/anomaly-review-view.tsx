@@ -137,7 +137,7 @@ const FieldRow = ({
               setDraft(display);
               setEditing(true);
             }}
-            className="text-slate-300 hover:text-primary transition-colors"
+            className="rounded p-1 text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors"
           >
             <Pencil className="size-3.5" />
           </button>
