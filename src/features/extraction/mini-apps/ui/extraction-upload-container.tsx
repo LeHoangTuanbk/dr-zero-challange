@@ -10,6 +10,7 @@ import {
 
 const UPLOAD_DURATION = 900;
 const EXTRACT_DURATION = 2000;
+const EXTRACT_TIMEOUT = 8000;
 
 const ExtractionUploadContainer = ({
   onComplete,
@@ -18,6 +19,7 @@ const ExtractionUploadContainer = ({
   const [fileName, setFileName] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleFileDrop = (file: File) => {
     setFileName(file.name);
@@ -58,7 +60,16 @@ const ExtractionUploadContainer = ({
         setPhase('done');
       }, EXTRACT_DURATION);
 
-      return () => clearInterval(interval);
+      timeoutRef.current = setTimeout(() => {
+        clearInterval(interval);
+        if (timerRef.current) clearTimeout(timerRef.current);
+        setPhase('error');
+      }, EXTRACT_TIMEOUT);
+
+      return () => {
+        clearInterval(interval);
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      };
     }
 
     if (phase === 'done') {
@@ -72,12 +83,19 @@ const ExtractionUploadContainer = ({
     };
   }, [phase, fileName, onComplete]);
 
+  const handleRetry = () => {
+    setPhase('idle');
+    setFileName(null);
+    setProgress(0);
+  };
+
   return (
     <ExtractionUploadView
       phase={phase}
       fileName={fileName}
       progress={progress}
       onFileDrop={handleFileDrop}
+      onRetry={handleRetry}
     />
   );
 };

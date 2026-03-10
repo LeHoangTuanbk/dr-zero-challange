@@ -2,16 +2,17 @@
 
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { UploadCloud, FileText, Loader2, CheckCircle2 } from 'lucide-react';
+import { UploadCloud, FileText, Loader2, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { cn } from '@shared/lib/shadcn';
 
-export type UploadPhase = 'idle' | 'uploading' | 'extracting' | 'done';
+export type UploadPhase = 'idle' | 'uploading' | 'extracting' | 'done' | 'error';
 
 export type ExtractionUploadViewProps = {
   phase: UploadPhase;
   fileName: string | null;
   progress: number;
   onFileDrop: (file: File) => void;
+  onRetry: () => void;
 };
 
 const PHASE_LABEL: Record<UploadPhase, string> = {
@@ -19,6 +20,7 @@ const PHASE_LABEL: Record<UploadPhase, string> = {
   uploading: 'アップロード中...',
   extracting: 'AIがデータを抽出中...',
   done: '抽出完了',
+  error: 'エラーが発生しました',
 };
 
 export const ExtractionUploadView = ({
@@ -26,6 +28,7 @@ export const ExtractionUploadView = ({
   fileName,
   progress,
   onFileDrop,
+  onRetry,
 }: ExtractionUploadViewProps) => {
   const onDrop = useCallback(
     (files: File[]) => {
@@ -47,6 +50,7 @@ export const ExtractionUploadView = ({
   });
 
   const isProcessing = phase === 'uploading' || phase === 'extracting';
+  const isError = phase === 'error';
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -66,7 +70,8 @@ export const ExtractionUploadView = ({
           isDragActive
             ? 'border-primary bg-primary/5 scale-[1.01]'
             : 'border-border bg-muted/30 hover:border-primary/50 hover:bg-muted/50',
-          phase !== 'idle' && 'pointer-events-none',
+          phase !== 'idle' && phase !== 'error' && 'pointer-events-none',
+        isError && 'border-red-300 bg-red-50/30',
         )}
       >
         <input {...getInputProps()} />
@@ -120,6 +125,29 @@ export const ExtractionUploadView = ({
             <p className="text-sm font-semibold text-emerald-700">
               {PHASE_LABEL.done} — 次のステップへ移行中...
             </p>
+          </>
+        )}
+
+        {isError && (
+          <>
+            <div className="flex size-16 items-center justify-center rounded-2xl bg-red-50">
+              <AlertTriangle className="size-8 text-red-500" />
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-sm font-semibold text-red-700">
+                AI抽出がタイムアウトしました
+              </p>
+              <p className="text-xs text-muted-foreground text-center max-w-xs">
+                サーバーの応答がありませんでした。再試行するか、別のファイルをアップロードしてください。
+              </p>
+              <button
+                onClick={(e) => { e.stopPropagation(); onRetry(); }}
+                className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 active:scale-[0.98] transition-all"
+              >
+                <RefreshCw className="size-3.5" />
+                再試行
+              </button>
+            </div>
           </>
         )}
       </div>
