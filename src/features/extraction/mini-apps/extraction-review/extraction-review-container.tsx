@@ -5,7 +5,7 @@ import { extractionResult } from '@shared/data/mock/extraction';
 import type { ExtractionTask } from '@shared/data/mock/extraction';
 import type { MiniAppProps, StepOutput } from '@shared/lib/workflow/types';
 import { withWorkflowStep } from '@shared/ui/mini-app/with-workflow-step';
-import { ExtractionReviewView } from './extraction-review-view';
+import { ExtractionReviewView } from './ui/extraction-review-view';
 
 const ExtractionReviewContainer = ({
   context,

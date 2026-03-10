@@ -6,15 +6,13 @@ import { withWorkflowStep } from '@shared/ui/mini-app/with-workflow-step';
 import {
   ExtractionUploadView,
   type UploadPhase,
-} from './extraction-upload-view';
+} from './ui/extraction-upload-view';
 
 const UPLOAD_DURATION = 900;
 const EXTRACT_DURATION = 2000;
 const EXTRACT_TIMEOUT = 8000;
 
-const ExtractionUploadContainer = ({
-  onComplete,
-}: MiniAppProps) => {
+const ExtractionUploadContainer = ({ onComplete }: MiniAppProps) => {
   const [phase, setPhase] = useState<UploadPhase>('idle');
   const [fileName, setFileName] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);

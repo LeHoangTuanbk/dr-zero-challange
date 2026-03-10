@@ -1,2 +1,2 @@
-export { ExtractionUploadApp } from './ui/extraction-upload-container';
-export { ExtractionReviewApp } from './ui/extraction-review-container';
+export { ExtractionUploadApp } from './extraction-upload';
+export { ExtractionReviewApp } from './extraction-review';
