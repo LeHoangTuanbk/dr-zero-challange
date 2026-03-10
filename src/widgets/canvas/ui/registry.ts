@@ -19,7 +19,6 @@ type RegistryEntry = {
   feature: string;
   export: string;
   title: string;
-  pattern: string;
 };
 
 const isRegistryEntry = (v: unknown): v is RegistryEntry =>
