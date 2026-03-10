@@ -61,8 +61,6 @@ pnpm test:watch    # watch mode
 
 - **No real backend.** AI extraction, anomaly detection, and email sending are all simulated with realistic delays and partial-failure states.
 - **Pattern B approval step omitted.** The assignment suggests `upload → extract → review → approve → save`. The review step itself acts as the approval — saving is the final commit action. A separate approve mini-app would add no UX value in this prototype.
-- **Supplier terminology.** The mock data uses "vendor" but "supplier" is the correct Scope 3 domain term. All code uses `supplier`.
-- **Japanese UI labels.** All primary labels are in Japanese per spec. English subtitles are included for secondary fields.
 
 ---
 
