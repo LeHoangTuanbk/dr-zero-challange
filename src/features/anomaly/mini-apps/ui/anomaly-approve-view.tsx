@@ -1,7 +1,6 @@
 import {
   CheckCircle2,
   ArrowRight,
-  RotateCcw,
   XCircle,
   Sparkles,
 } from 'lucide-react';
@@ -144,7 +143,7 @@ export const AnomalyApproveView = ({
               onClick={onBack}
               className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              <RotateCcw className="size-3.5" /> 編集に戻る
+              ← 戻る
             </button>
           )}
           <button
