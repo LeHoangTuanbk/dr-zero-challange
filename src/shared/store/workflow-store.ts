@@ -27,20 +27,20 @@ import { getWorkflowConfig } from '@shared/lib/workflow/configs';
 
 type RawTask = { workflow: string };
 
-function resolveRawTask(taskId: string): RawTask | null {
+const resolveRawTask = (taskId: string): RawTask | null => {
   return (
     anomalyTasks.find((t) => t.id === taskId) ??
     (extractionTask.id === taskId ? extractionTask : null) ??
     (supplierTask.id === taskId ? supplierTask : null)
   );
-}
+};
 
-function buildContext(
+const buildContext = (
   taskId: string,
   stepOutputs: Record<string, StepOutput>,
-): WorkflowContext {
+): WorkflowContext => {
   return { taskId, task: resolveRawTask(taskId), stepOutputs };
-}
+};
 
 const NARRATIVES: Record<string, string> = {
   ...anomalyNarratives,
@@ -48,15 +48,15 @@ const NARRATIVES: Record<string, string> = {
   ...extractionNarratives,
 };
 
-function pickNarrative(taskId: string, stepId: string): string | null {
+const pickNarrative = (taskId: string, stepId: string): string | null => {
   return NARRATIVES[`${taskId}:${stepId}`] ?? null;
-}
+};
 
-function makeNarrativeMsg(
+const makeNarrativeMsg = (
   taskId: string,
   stepId: string,
   text: string,
-): NarrativeMessage {
+): NarrativeMessage => {
   return {
     id: `${taskId}:${stepId}:${Date.now()}`,
     taskId,
@@ -64,12 +64,12 @@ function makeNarrativeMsg(
     text,
     timestamp: Date.now(),
   };
-}
+};
 
 type WorkflowStore = {
   tasks: QueueTask[];
   activeTaskId: string | null;
-  workflowStates: Record<string, TaskWorkflowState>;
+  workflowStates: Record<string, TaskWorkflowState>; // activeTaskId: { currentStepId, stepOutputs, status }
   narrativeMessages: NarrativeMessage[];
 
   selectTask: (taskId: string) => void;

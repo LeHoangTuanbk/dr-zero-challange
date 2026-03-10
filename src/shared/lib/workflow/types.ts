@@ -20,15 +20,13 @@ export type RawWorkflowConfig = Omit<WorkflowConfig, 'steps'> & {
 
 export type WorkflowTask = { workflow: string };
 
-export interface WorkflowContext {
+export type WorkflowContext = {
   taskId: string;
   task: WorkflowTask | null;
   stepOutputs: Record<string, StepOutput>;
-}
+};
 
 export type StepOutput = Record<string, unknown>;
-
-// ─── Mini-App Contract ────────────────────────────────────────────────────────
 
 export type MiniAppProps = {
   context: WorkflowContext;
